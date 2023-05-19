@@ -15,7 +15,7 @@ this adapter is an experiment, here be dragons! I really don't even recommend yo
 
 I have put some simple hacks in this forked version that supports:
 
-1. Re-use "get_columns_in_relation" from dbt-synapse apdater without the temp table hack because Synapse Serverless technically doesn't support table creation. It means this version can work with dbt-utils, e.g. "stars" macro.
+1. Re-use "get_columns_in_relation" from dbt-synapse apdater without the temp table hack because Synapse Serverless technically doesn't support table creation. It means this version can work with dbt-utils, e.g. "star" macro.
 2. Add "External Table" materialization. Please use "external" as materialization for this purpose. However, re-creation cannot be done in DBT. You will need to buidl a pipeline to remove physical folder in connected Data Lake.
 3. Re-use "test" materialization from dbt-sqlserver adapter. Testing SQL code will be materialized into a view instead of a temp table.
 
