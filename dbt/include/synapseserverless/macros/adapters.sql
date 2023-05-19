@@ -15,11 +15,17 @@
 {% endmacro %}
 
 {% macro synapseserverless__get_columns_in_relation(relation) -%}
-    {{ exceptions.raise_compiler_error("""
-      getting columns in relation is not supported in serverless pools because
-      1) there is no info schema for temp tables,
-      2) nor are there tables at all!
-    """
-        )
-    }}
+  {% call statement('get_columns_in_relation', fetch_result=True) %}
+    select
+        column_name,
+        data_type,
+        character_maximum_length,
+        numeric_precision,
+        numeric_scale
+    from INFORMATION_SCHEMA.COLUMNS
+    where table_name = '{{ relation.identifier }}'
+      and table_schema = '{{ relation.schema }}'
+  {% endcall %}
+  {% set table = load_result('get_columns_in_relation').table %}
+  {{ return(sql_convert_columns_in_relation(table)) }}
 {% endmacro %}
