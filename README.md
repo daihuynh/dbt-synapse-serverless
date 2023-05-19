@@ -11,10 +11,15 @@ In serverless pools, you can't:
 this adapter is an experiment, here be dragons! I really don't even recommend you use dbt with serverless
 ## Installation & Setup
 
-This is not published to PyPI. for now, install from Github with:
+This is not published to PyPI. for now, install the original version from Github with:
 
 ```sh
 pip install git+https://github.com/dbt-msft/dbt-synapse-serverless.git
+```
+
+To install this forked version:
+```sh
+pip install git+https://github.com/daihuynh/dbt-synapse-serverless.git
 ```
 
 ### Caveats
