@@ -53,6 +53,6 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        "dbt-synapse~=0.20.0"
+        "dbt-synapse~=1.3.3"
     ]
 )
