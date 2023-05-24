@@ -14,6 +14,8 @@
                               database=config.get('target_database'),
                               type='external') -%}
 
+  {{ drop_relation_if_exists(target_relation) }}
+  
   {{ run_hooks(pre_hooks, inside_transaction=False) }}
 
   {{ run_hooks(pre_hooks, inside_transaction=True) }}
