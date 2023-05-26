@@ -4,28 +4,29 @@ custom [dbt](https://www.getdbt.com) adapter for [Azure Synapse](https://azure.m
 
 ## major differences b/w `dbt-synapse-serverless` and `dbt-synapse`
 In serverless pools, you can't:
-- make tables (except external)
-- rename relations
-- use three part names (only `schema.relation`)
-## status & support
+- make tables (except external).
+- rename table relations but views.
+- use three part names (only `schema.relation`).
+## Status & Support
 
 ```
 this adapter is an experiment, here be dragons! I really don't even recommend you use dbt with serverless
 ```
 
-I have put some simple hacks in this forked version that supports:
+In this fork, I have collected all ideas and fixes in the orignal adapter's WIKI and PRs, and re-implemented dbt-core's features utilising CETAS (Create External Table As Select) in Synapse Serverless:
 
-1. Re-use "get_columns_in_relation" from dbt-synapse apdater without the temp table hack because Synapse Serverless technically doesn't support table creation. It means this version can work with dbt-utils, e.g. "star" macro.
-2. Add "External Table" materialization. Please use "external" as materialization for this purpose. However, re-creation cannot be done in DBT. You will need to build a pipeline to remove physical folder in connected Data Lake.
-3. Re-use "test" materialization from dbt-sqlserver adapter. Testing SQL code will be materialized into a view instead of a temp table.
+1. **External Table** as a materialization type. Please use 'external' in config.
+2. **Snapshot** is re-implemented as a one-off snapshot materialized as an external table using CETAS.
+3. **Seed** is re-implemented as a one-off external table creation using CETAS.
+
+## Limitation
+
+External tables cannot be re-created without removing associated folder/files at the specified location in creation. My suggestion is to create a Pipeline in Synapse to drop an external table and its associated folder/files all at once.
+For snapshots and seed external tables, you can create seperate folders, e.g. MySnapshot, in Azure Data Lake, then build a Synapse Pipeline to cleanup folder. After cleaning up, the pipeline triggers another pipeline in DevOps to re-create snapshots and seeds using ```dbt seed``` and ```dbt snapshot```.
 
 ## Installation & Setup
 
-This is not published to PyPI. for now, install the original version from Github with:
-
-```sh
-pip install git+https://github.com/dbt-msft/dbt-synapse-serverless.git
-```
+This is not published to PyPI. 
 
 To install this forked version:
 ```sh
