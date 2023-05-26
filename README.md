@@ -18,6 +18,7 @@ In this fork, I have collected all ideas and fixes in the orignal adapter's WIKI
 1. **External Table** as a materialization type. Please use 'external' in config.
 2. **Snapshot** is re-implemented as a one-off snapshot materialized as an external table using CETAS.
 3. **Seed** is re-implemented as a one-off external table creation using CETAS.
+4. **Test** is now available. Temporary results from testing code is stored in a view instead of table.
 
 ## Limitation
 
