@@ -1,5 +1,5 @@
 {% macro synapseserverless__create_table_as(temporary, relation, sql) -%}
-    {{ exceptions.raise_compiler_error(
+    {{ exceptions.CompilationError(
         "creating tables is not supported in serverless pools"
         )
     }}
