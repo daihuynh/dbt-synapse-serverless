@@ -3,7 +3,7 @@ from typing import Optional
 from dataclasses import dataclass
 
 from dbt.adapters.base.relation import BaseRelation, Policy
-from dbt.exceptions import RuntimeException
+from dbt.exceptions import DbtRuntimeError
 
 @dataclass
 class SynapseServerlessIncludePolicy(Policy):
