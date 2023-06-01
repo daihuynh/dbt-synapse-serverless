@@ -26,7 +26,7 @@
   -- build model
   {% set create_table_sql = "" %}
   {% if exists_as_view %}
-    {{ exceptions.raise_compiler_error("Cannot seed to '{}', it is a view".format(old_relation)) }}
+    {{ exceptions.CompilationError("Cannot seed to '{}', it is a view".format(old_relation)) }}
   {% endif %}
 
   {% set sql = load_csv_rows(model, agate_table) %}
